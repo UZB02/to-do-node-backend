@@ -31,6 +31,18 @@ app.post('/api/books', (req, res) => {
   res.status(201).send(newbook);
 });
 
+app.delete('/api/books/:id', (req, res) => {
+  const bookIndex = books.findIndex((item) => item.id === parseInt(req.params.id));
+  if (bookIndex === -1) {
+    return res.status(404).send("Kitob mavjud emas");
+  }
+
+  // O'chirilgan kitobni qaytarish
+  const deletedBook = books.splice(bookIndex, 1)[0]; // Kitobni olib tashlash va o'chirilgan kitobni saqlash
+  res.status(200).send(deletedBook); // O'chirilgan kitobni qaytarish
+});
+
+
 app.get('/api/books/:id', (req, res) => {
   const bookid = books.find((item) => item.id === parseInt(req.params.id));
   if (!bookid) {
